@@ -1,0 +1,41 @@
+syntax = "proto3";
+
+package statu;
+
+message Statu {
+  string id = 1;
+  string message=2;
+  string user=3;
+  }
+
+message getsinglestatusRequest{
+    Statu status=1;
+   
+}
+message  getsinglestatusResponse{
+    Statu status=1;
+    
+  }
+message getmanystatusRequest{
+    repeated Statu status=1;
+    
+}
+
+message getmanystatusResponse{
+  repeated Statu status=1;
+}
+message getmessagetoshowrequest{
+    string message=1;
+  }
+  message getmessagetoshowresponse{
+    string message=1;
+  }
+
+
+service StatusService {
+    rpc getstatus(getmanystatusRequest) returns (getmanystatusResponse);
+    rpc getstatu(getsinglestatusRequest) returns (getsinglestatusResponse);
+    rpc getmessage(getmessagetoshowrequest) returns (getmessagetoshowresponse);
+   
+  }
+  
