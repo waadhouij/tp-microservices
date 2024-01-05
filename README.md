@@ -80,3 +80,4 @@ Use gRPC: Set up a gRPC client and make requests to the API gateway using the de
 Use REST: Make HTTP requests to the REST API endpoints exposed by the REST server.
 Choose the approach that best fits your requirements and development environment.
 
+# microapp
