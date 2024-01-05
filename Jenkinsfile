@@ -11,14 +11,21 @@ pipeline{
       steps{
         script{
           sh 'npm install'
-      docker.build(RURL)
+     withCredentials([usernamePassword(credentialsId: RCRED_ID, usernameVariable: 'DOCKER_USERNAME', passwordVariable: 'DOCKER_PASSWORD')]) {
+                        
+                        // Set Docker username and password from credentials
+                        env.DOCKER_USERNAME = DOCKER_USERNAME
+                        env.DOCKER_PASSWORD = DOCKER_PASSWORD
 
-                    // Taguer l'image
-                    docker.image(RURL).push(RCRED)
+                        sh '''
+                        # Construire l'image Docker
+                        docker build -t $RURL .
 
-                    // Poussez l'image vers Docker Hub
-                    docker.withRegistry('https://registry.hub.docker.com', RCRED) {
-                        docker.image(RURL).push()
+                        # Se connecter à Docker Hub et pousser l'image
+                        docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
+                        docker push $RURL
+                        '''
+                    }
                     }
         }
       }
